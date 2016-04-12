@@ -154,10 +154,14 @@ app.use(passport.initialize());
 We set up a strategy - in this case authenticate user (passport.js):
 
 var JwtStrategy = require("passport-jwt").Strategy;
+
 ExtractJwt = require('passport-jwt').ExtractJwt;
+
 var jwt = require("jwt-simple");
 
+
 var User = require("../models/user");
+
 var jwtConfig = require("../config/jwtconfig").jwtConfig;
 
 module.exports = function (passport) {
@@ -183,6 +187,7 @@ module.exports = function (passport) {
     }))
 };
 And we secure our api (app.js):
+
 app.use('/api', function (req, res, next) {
   passport.authenticate('jwt', {session: false}, function (err, user, info) {
     if (err) {
@@ -194,6 +199,17 @@ app.use('/api', function (req, res, next) {
     return res.status(403).json({mesage: "Token could not be authenticated", fullError: info});
   })(req, res, next);
 });
+
+9 - Explain, at a very basic level, OAuth 2 + OpenID Connect and the problems it solves. 
+
+OAuth is a open standard for authorization - allowing internet users to log in to websites using their 
+accounts on social media, Google, Microsoft without exposing their username and password.
+
+Based on Json and HTTP and OpenID use them when authenticating users without storing passwords
+
+10 - Demonstrate, with focus on security, a proposal for an Express/Mongo+Angular-seed with built in support 
+for most of the basic security problems, SSL and ready to deploy on your favourite Cloud Hosting Service. 
+Se SemesterSeed - still missing the frontend
 
 
 
