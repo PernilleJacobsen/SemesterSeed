@@ -1,0 +1,2 @@
+# SemesterSeed
+MeanPeriod4
