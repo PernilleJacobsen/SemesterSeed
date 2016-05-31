@@ -46,6 +46,17 @@ SQL injection exploits vulnerabillity - Incorrectly validated or nonvalidated st
 into a dynamic SQL statement, and interpreted as code by the SQL engine. We prevent this in Java by using 
 prepared statements where you replace values with ? instead of fieldnames.
 
+NoSQL Injection
+
+We no longer deal with a query language in the form of a string therefore one would think that injection is no longer possible... wrong! For example, assume that the username field is coming from a deserialized JSON object, manipulation of the above query is not only possible but inevitable. Such as, if one supplies a JSON document as the input to the application, an attacker will be able to perform the exact same login bypass that was before possible only with SQL injection.
+
+Ex. MongoDB Injection:
+Server code: db.accounts.find({username: username, password: password});
+Client creates following json request -> 
+{ "username": "admin", "password": {$gt: ""} } 
+
+Result is that "Get all users with username admin and password greater than emptry String", returns all admins.
+
 DOS attacks: Denial-of-service - is an attemp to make a machine or network ressource unavailable or interrupt/suspend 
 a service. Typical it is a attack performed by thousands of IP adresses working together and requesting a service 
 at the same time - and by that blocks the service.
